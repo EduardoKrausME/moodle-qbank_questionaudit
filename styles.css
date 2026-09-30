@@ -1,0 +1,11 @@
+.qbank-questionaudit-finding[data-severity="error"] {
+    border-left-width: .35rem !important;
+}
+
+.qbank-questionaudit-finding[data-severity="warning"] {
+    border-left-width: .25rem !important;
+}
+
+.qbank-questionaudit-finding q {
+    white-space: pre-wrap;
+}

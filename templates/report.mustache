@@ -1,0 +1,58 @@
+{{!
+    @template qbank_questionaudit/report
+
+    Audit results. All content values are escaped by Mustache.
+}}
+<div class="qbank-questionaudit">
+    <div class="alert alert-info" role="note">{{ailimitation}}</div>
+
+    {{#questions}}
+        <section class="card mb-4">
+            <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div>
+                    <h3 class="h5 mb-1">{{name}}</h3>
+                    <span class="badge bg-secondary">{{qtype}}</span>
+                </div>
+                {{#editurl}}
+                    <a class="btn btn-secondary btn-sm" href="{{{editurl}}}">{{#str}}openquestion, qbank_questionaudit{{/str}}</a>
+                {{/editurl}}
+            </div>
+            <div class="card-body">
+                {{#summary}}
+                    <h4 class="h6">{{#str}}summary, qbank_questionaudit{{/str}}</h4>
+                    <p>{{summary}}</p>
+                {{/summary}}
+
+                {{#aierrormessage}}
+                    <div class="alert alert-warning">{{aierrormessage}}</div>
+                {{/aierrormessage}}
+
+                <h4 class="h6 mt-3">{{#str}}findings, qbank_questionaudit{{/str}}</h4>
+                {{^hasfindings}}
+                    <p class="text-muted">{{#str}}nofindings, qbank_questionaudit{{/str}}</p>
+                {{/hasfindings}}
+
+                {{#findings}}
+                    <article class="qbank-questionaudit-finding border rounded p-3 mb-3" data-severity="{{severitykey}}">
+                        <div class="d-flex flex-wrap gap-2 mb-2">
+                            <strong>{{severity}}</strong>
+                            <span class="badge bg-light text-dark">{{category}}</span>
+                            <span class="badge bg-light text-dark">{{#str}}confidence, qbank_questionaudit{{/str}}: {{confidence}}</span>
+                            <span class="badge bg-light text-dark">{{source}}</span>
+                        </div>
+                        <dl class="mb-0">
+                            <dt>{{#str}}evidence, qbank_questionaudit{{/str}}</dt>
+                            <dd><q>{{evidence}}</q></dd>
+                            <dt>{{#str}}explanation, qbank_questionaudit{{/str}}</dt>
+                            <dd>{{explanation}}</dd>
+                            <dt>{{#str}}suggestion, qbank_questionaudit{{/str}}</dt>
+                            <dd class="mb-0">{{suggestion}}</dd>
+                        </dl>
+                    </article>
+                {{/findings}}
+            </div>
+        </section>
+    {{/questions}}
+
+    <a class="btn btn-primary" href="{{{returnurl}}}">{{#str}}backtoquestionbank, qbank_questionaudit{{/str}}</a>
+</div>
