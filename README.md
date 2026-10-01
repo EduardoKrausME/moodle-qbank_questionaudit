@@ -11,7 +11,7 @@ The plugin adds three native question-bank entry points:
 
 ## Question types analysed
 
-the plugin supports semantic auditing for:
+the plugin performs semantic auditing for:
 
 - Multiple choice (`multichoice`)
 - True/false (`truefalse`)
@@ -20,7 +20,7 @@ the plugin supports semantic auditing for:
 - Essay (`essay`)
 - Matching (`match`), when the question data can be represented as complete matching pairs
 
-Unsupported question types are not sent to AI and receive an informational local finding instead.
+Question types outside this set are not sent to AI and receive an informational local finding instead.
 
 ## Deterministic checks first
 
@@ -34,14 +34,14 @@ Before any AI request, PHP checks the normalized question for issues including:
 - empty alternatives or matching pairs;
 - missing feedback;
 - simple unbalanced HTML structures;
-- known minimum structural requirements for supported qtypes.
+- known minimum structural rules for handled qtypes.
 
 These checks are intentionally conservative. The HTML check, for example, is a simple balance check and is not intended
 to replace a complete HTML validator.
 
 ## AI review
 
-After deterministic analysis, supported questions are sent to `local_ai_bridge` for semantic review. The request asks
+After deterministic analysis, questions in this set are sent to `local_ai_bridge` for semantic review. The request asks
 the model to inspect:
 
 - ambiguous wording;
