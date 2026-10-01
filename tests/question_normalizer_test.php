@@ -17,14 +17,14 @@
 namespace qbank_questionaudit;
 
 use advanced_testcase;
-use qbank_questionaudit\local\question_normalizer;
+use qbank_questionaudit\question_normalizer;
 use question_bank;
 
 /**
  * Tests for question normalization.
  *
  * @package    qbank_questionaudit
- * @covers     \qbank_questionaudit\local\question_normalizer
+ * @covers     \qbank_questionaudit\question_normalizer
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

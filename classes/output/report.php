@@ -18,8 +18,8 @@ namespace qbank_questionaudit\output;
 
 use context;
 use moodle_url;
-use qbank_questionaudit\local\access_manager;
-use qbank_questionaudit\local\question_repository;
+use qbank_questionaudit\access_manager;
+use qbank_questionaudit\question_repository;
 use renderable;
 use renderer_base;
 use templatable;

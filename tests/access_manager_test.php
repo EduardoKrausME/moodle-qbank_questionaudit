@@ -17,13 +17,13 @@
 namespace qbank_questionaudit;
 
 use advanced_testcase;
-use qbank_questionaudit\local\access_manager;
+use qbank_questionaudit\access_manager;
 
 /**
  * Capability tests.
  *
  * @package    qbank_questionaudit
- * @covers     \qbank_questionaudit\local\access_manager
+ * @covers     \qbank_questionaudit\access_manager
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

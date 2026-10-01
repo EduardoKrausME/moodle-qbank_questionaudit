@@ -26,9 +26,9 @@ require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir . '/questionlib.php');
 
 use core_question\local\bank\helper;
-use qbank_questionaudit\local\access_manager;
-use qbank_questionaudit\local\audit_service;
-use qbank_questionaudit\local\question_repository;
+use qbank_questionaudit\access_manager;
+use qbank_questionaudit\audit_service;
+use qbank_questionaudit\question_repository;
 use qbank_questionaudit\output\report;
 
 require_login();

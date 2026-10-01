@@ -18,13 +18,13 @@ namespace qbank_questionaudit;
 
 use advanced_testcase;
 use invalid_parameter_exception;
-use qbank_questionaudit\local\ai_response_parser;
+use qbank_questionaudit\ai_response_parser;
 
 /**
  * Tests for strict AI JSON parsing.
  *
  * @package    qbank_questionaudit
- * @covers     \qbank_questionaudit\local\ai_response_parser
+ * @covers     \qbank_questionaudit\ai_response_parser
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

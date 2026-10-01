@@ -17,13 +17,13 @@
 namespace qbank_questionaudit;
 
 use advanced_testcase;
-use qbank_questionaudit\local\deterministic_analyzer;
+use qbank_questionaudit\deterministic_analyzer;
 
 /**
  * Tests for deterministic checks.
  *
  * @package    qbank_questionaudit
- * @covers     \qbank_questionaudit\local\deterministic_analyzer
+ * @covers     \qbank_questionaudit\deterministic_analyzer
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
