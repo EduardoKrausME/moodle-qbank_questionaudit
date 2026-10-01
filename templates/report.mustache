@@ -1,4 +1,20 @@
 {{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
     @template qbank_questionaudit/report
 
     Audit results. All content values are escaped by Mustache.
@@ -14,7 +30,8 @@
                     <span class="badge bg-secondary">{{qtype}}</span>
                 </div>
                 {{#editurl}}
-                    <a class="btn btn-secondary btn-sm" href="{{{editurl}}}">{{#str}}openquestion, qbank_questionaudit{{/str}}</a>
+                    <a class="btn btn-secondary btn-sm" href="{{{editurl}}}">{{#str}}
+                        openquestion, qbank_questionaudit{{/str}}</a>
                 {{/editurl}}
             </div>
             <div class="card-body">
@@ -33,11 +50,13 @@
                 {{/hasfindings}}
 
                 {{#findings}}
-                    <article class="qbank-questionaudit-finding border rounded p-3 mb-3" data-severity="{{severitykey}}">
+                    <article class="qbank-questionaudit-finding border rounded p-3 mb-3"
+                             data-severity="{{severitykey}}">
                         <div class="d-flex flex-wrap gap-2 mb-2">
                             <strong>{{severity}}</strong>
                             <span class="badge bg-light text-dark">{{category}}</span>
-                            <span class="badge bg-light text-dark">{{#str}}confidence, qbank_questionaudit{{/str}}: {{confidence}}</span>
+                            <span class="badge bg-light text-dark">{{#str}}
+                                confidence, qbank_questionaudit{{/str}}: {{confidence}}</span>
                             <span class="badge bg-light text-dark">{{source}}</span>
                         </div>
                         <dl class="mb-0">

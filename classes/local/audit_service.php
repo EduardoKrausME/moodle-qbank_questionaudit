@@ -8,14 +8,18 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit\local;
 
+use invalid_parameter_exception;
+use moodle_exception;
+use question_bank;
+use required_capability_exception;
 use Throwable;
 
 /**
@@ -34,7 +38,7 @@ class audit_service {
      */
     public function audit_question(int $questionid): array {
         access_manager::require_view_question($questionid);
-        $questiondata = \question_bank::load_question_data($questionid);
+        $questiondata = question_bank::load_question_data($questionid);
         $question = question_normalizer::normalize($questiondata);
 
         $analyzer = new deterministic_analyzer();
@@ -44,8 +48,8 @@ class audit_service {
         $aierror = '';
 
         if (question_normalizer::is_supported((string)$question['qtype']) &&
-                trim((string)$question['questiontext']) !== '' &&
-                question_normalizer::evidence_corpus($question) !== '') {
+            trim((string)$question['questiontext']) !== '' &&
+            question_normalizer::evidence_corpus($question) !== '') {
             try {
                 $review = (new ai_reviewer())->review($question);
                 $aisummary = (string)$review['summary'];
@@ -70,13 +74,13 @@ class audit_service {
      * @return string
      */
     private function safe_ai_error(Throwable $exception): string {
-        if ($exception instanceof \invalid_parameter_exception) {
+        if ($exception instanceof invalid_parameter_exception) {
             return get_string('invalidairesponse', 'qbank_questionaudit');
         }
-        if ($exception instanceof \required_capability_exception) {
+        if ($exception instanceof required_capability_exception) {
             return get_string('bridgepermission', 'qbank_questionaudit');
         }
-        if ($exception instanceof \moodle_exception) {
+        if ($exception instanceof moodle_exception) {
             return match ($exception->errorcode) {
                 'bridgeunavailable' => get_string('bridgeunavailable', 'qbank_questionaudit'),
                 'error:notenant' => get_string('bridgetenant', 'qbank_questionaudit'),

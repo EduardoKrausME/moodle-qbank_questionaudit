@@ -8,13 +8,17 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit\local;
+
+use core_text;
+use local_ai_bridge\api;
+use moodle_exception;
 
 /**
  * Semantic question reviewer backed exclusively by local_ai_bridge.
@@ -35,19 +39,19 @@ class ai_reviewer {
      */
     public function review(array $question): array {
         if (!class_exists('\\local_ai_bridge\\api')) {
-            throw new \moodle_exception('bridgeunavailable', 'qbank_questionaudit');
+            throw new moodle_exception('bridgeunavailable', 'qbank_questionaudit');
         }
 
         $payload = $this->ai_payload($question);
         $messages = [[
             'role' => 'user',
             'content' => $this->instruction() . "\n\nQUESTION_DATA:\n" . json_encode(
-                $payload,
-                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
-            ),
+                    $payload,
+                    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT
+                ),
         ]];
 
-        $response = \local_ai_bridge\api::generate(self::PURPOSE, $messages);
+        $response = api::generate(self::PURPOSE, $messages);
         $parser = new ai_response_parser();
         return $parser->parse($response->text, $question);
     }
@@ -138,9 +142,9 @@ PROMPT;
      * @return string
      */
     private function limit(string $value): string {
-        if (\core_text::strlen($value) <= 12000) {
+        if (core_text::strlen($value) <= 12000) {
             return $value;
         }
-        return \core_text::substr($value, 0, 12000) . '…';
+        return core_text::substr($value, 0, 12000) . '…';
     }
 }

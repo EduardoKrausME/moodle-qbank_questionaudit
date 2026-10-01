@@ -8,11 +8,11 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Run question audits without modifying question data.
@@ -25,13 +25,14 @@
 require_once(__DIR__ . '/../../../config.php');
 require_once($CFG->libdir . '/questionlib.php');
 
+use core_question\local\bank\helper;
 use qbank_questionaudit\local\access_manager;
 use qbank_questionaudit\local\audit_service;
 use qbank_questionaudit\local\question_repository;
 use qbank_questionaudit\output\report;
 
 require_login();
-\core_question\local\bank\helper::require_plugin_enabled('qbank_questionaudit');
+helper::require_plugin_enabled('qbank_questionaudit');
 require_sesskey();
 
 $questionid = optional_param('id', 0, PARAM_INT);

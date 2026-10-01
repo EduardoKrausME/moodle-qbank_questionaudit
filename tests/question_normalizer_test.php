@@ -8,15 +8,17 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit;
 
+use advanced_testcase;
 use qbank_questionaudit\local\question_normalizer;
+use question_bank;
 
 /**
  * Tests for question normalization.
@@ -26,7 +28,7 @@ use qbank_questionaudit\local\question_normalizer;
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class question_normalizer_test extends \advanced_testcase {
+final class question_normalizer_test extends advanced_testcase {
     /**
      * All initially supported qtypes are declared explicitly.
      */
@@ -49,7 +51,7 @@ final class question_normalizer_test extends \advanced_testcase {
         $generator = $this->getDataGenerator()->get_plugin_generator('core_question');
         $category = $generator->create_question_category();
         $created = $generator->create_question($qtype, null, ['category' => $category->id]);
-        $loaded = \question_bank::load_question_data((int)$created->id);
+        $loaded = question_bank::load_question_data((int)$created->id);
 
         $normalized = question_normalizer::normalize($loaded);
         $this->assertSame($qtype, $normalized['qtype']);

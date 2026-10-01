@@ -8,14 +8,16 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit\output;
 
+use context;
+use moodle_url;
 use qbank_questionaudit\local\access_manager;
 use qbank_questionaudit\local\question_repository;
 use renderable;
@@ -34,11 +36,11 @@ class report implements renderable, templatable {
      * Constructor.
      *
      * @param array $results Audit results.
-     * @param \moodle_url $returnurl Question bank return URL.
+     * @param moodle_url $returnurl Question bank return URL.
      */
     public function __construct(
-        private readonly array $results,
-        private readonly \moodle_url $returnurl
+        private readonly array       $results,
+        private readonly moodle_url $returnurl
     ) {
     }
 
@@ -80,7 +82,7 @@ class report implements renderable, templatable {
                     $editparams['courseid'] = $courseid;
                 } else {
                     $category = (new question_repository())->category_for_question((int)$question['id']);
-                    $context = \context::instance_by_id((int)$category->contextid);
+                    $context = context::instance_by_id((int)$category->contextid);
                     if ($context->contextlevel === CONTEXT_MODULE) {
                         $editparams['cmid'] = $context->instanceid;
                     } else if ($context->contextlevel === CONTEXT_COURSE) {
@@ -89,7 +91,7 @@ class report implements renderable, templatable {
                         $editparams['courseid'] = SITEID;
                     }
                 }
-                $editurl = new \moodle_url('/question/bank/editquestion/question.php', $editparams);
+                $editurl = new moodle_url('/question/bank/editquestion/question.php', $editparams);
             }
 
             $aierror = (string)$result['aierror'];

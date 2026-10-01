@@ -8,14 +8,15 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit\local;
 
+use core_text;
 use invalid_parameter_exception;
 
 /**
@@ -55,12 +56,12 @@ class ai_response_parser {
         }
 
         $summary = trim($decoded['summary']);
-        if ($summary === '' || \core_text::strlen($summary) > 4000) {
+        if ($summary === '' || core_text::strlen($summary) > 4000) {
             throw new invalid_parameter_exception('AI response summary is empty or too long.');
         }
 
         $corpus = question_normalizer::text(question_normalizer::evidence_corpus($question));
-        $normalizedcorpus = \core_text::strtolower($corpus);
+        $normalizedcorpus = core_text::strtolower($corpus);
         $findings = [];
         if (count($decoded['findings']) > 50) {
             throw new invalid_parameter_exception('AI response contains too many findings.');
@@ -97,12 +98,12 @@ class ai_response_parser {
             if ($evidence === '' || $explanation === '' || $suggestion === '') {
                 throw new invalid_parameter_exception('AI finding contains empty required text.');
             }
-            if (\core_text::strlen($evidence) > 4000 || \core_text::strlen($explanation) > 8000 ||
-                    \core_text::strlen($suggestion) > 8000) {
+            if (core_text::strlen($evidence) > 4000 || core_text::strlen($explanation) > 8000 ||
+                core_text::strlen($suggestion) > 8000) {
                 throw new invalid_parameter_exception('AI finding contains oversized text.');
             }
 
-            $normalizedevidence = \core_text::strtolower($evidence);
+            $normalizedevidence = core_text::strtolower($evidence);
             if ($normalizedcorpus === '' || !str_contains($normalizedcorpus, $normalizedevidence)) {
                 throw new invalid_parameter_exception('AI finding evidence is not present in the question.');
             }

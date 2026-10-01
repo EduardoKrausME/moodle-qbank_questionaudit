@@ -8,13 +8,15 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit\local;
+
+use core_text;
 
 /**
  * Fast local checks that do not use AI.
@@ -92,7 +94,7 @@ class deterministic_analyzer {
                     get_string('suggest_empty_answer', 'qbank_questionaudit')
                 );
             } else {
-                $key = \core_text::strtolower($text);
+                $key = core_text::strtolower($text);
                 if (isset($seen[$key])) {
                     $findings[] = $this->finding(
                         'warning', 'duplicate_answer', 'high', $text,
@@ -275,7 +277,7 @@ class deterministic_analyzer {
         $void = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
         $stack = [];
         foreach ($matches as $match) {
-            $tag = \core_text::strtolower($match[1]);
+            $tag = core_text::strtolower($match[1]);
             $token = $match[0];
             if (in_array($tag, $void, true) || str_ends_with(trim($token), '/>')) {
                 continue;
@@ -300,10 +302,10 @@ class deterministic_analyzer {
      */
     private function meaningful_name(string $name, string $qtype): bool {
         $name = trim($name);
-        if (\core_text::strlen($name) < 4) {
+        if (core_text::strlen($name) < 4) {
             return false;
         }
-        $lower = \core_text::strtolower($name);
+        $lower = core_text::strtolower($name);
         $generic = ['question', 'new question', 'questão', 'nova questão', $qtype];
         return !in_array($lower, $generic, true);
     }

@@ -8,17 +8,20 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit;
 
+use action_link;
 use core\context;
 use core_question\local\bank\plugin_features_base;
 use core_question\local\bank\view;
+use moodle_url;
+use renderable;
 
 /**
  * Question bank integration points for the audit plugin.
@@ -57,21 +60,21 @@ class plugin_feature extends plugin_features_base {
      * @param view $qbank Question bank view.
      * @param context $context Current question category context.
      * @param int $categoryid Current category id.
-     * @return \renderable[]
+     * @return renderable[]
      */
     public function get_question_bank_controls(view $qbank, context $context, int $categoryid): array {
         if (!has_any_capability(['moodle/question:viewmine', 'moodle/question:viewall'], $context)) {
             return [];
         }
 
-        $url = new \moodle_url('/question/bank/questionaudit/audit.php', [
+        $url = new moodle_url('/question/bank/questionaudit/audit.php', [
             'categoryid' => $categoryid,
             'returnurl' => $qbank->returnurl,
             'sesskey' => sesskey(),
         ]);
 
         return [
-            450 => new \action_link(
+            450 => new action_link(
                 $url,
                 get_string('auditcategory', 'qbank_questionaudit'),
                 null,

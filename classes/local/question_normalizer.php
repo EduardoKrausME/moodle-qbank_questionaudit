@@ -8,13 +8,15 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit\local;
+
+use stdClass;
 
 /**
  * Convert Moodle question data into the small, provider-neutral structure used by the auditor.
@@ -47,10 +49,10 @@ class question_normalizer {
     /**
      * Normalize a question loaded using question_bank::load_question_data().
      *
-     * @param \stdClass $question Moodle question data.
+     * @param stdClass $question Moodle question data.
      * @return array
      */
-    public static function normalize(\stdClass $question): array {
+    public static function normalize(stdClass $question): array {
         $normalized = [
             'id' => (int)($question->id ?? 0),
             'qtype' => (string)($question->qtype ?? ''),

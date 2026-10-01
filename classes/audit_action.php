@@ -8,15 +8,18 @@
 //
 // Moodle is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle. If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace qbank_questionaudit;
 
 use core_question\local\bank\question_action_base;
+use moodle_url;
+use question_bank;
+use stdClass;
 
 /**
  * Per-question audit action.
@@ -49,18 +52,18 @@ class audit_action extends question_action_base {
     /**
      * Build action URL, icon and label.
      *
-     * @param \stdClass $question Question bank row.
+     * @param stdClass $question Question bank row.
      * @return array
      */
-    protected function get_url_icon_and_label(\stdClass $question): array {
-        if (!\question_bank::is_qtype_installed($question->qtype)) {
+    protected function get_url_icon_and_label(stdClass $question): array {
+        if (!question_bank::is_qtype_installed($question->qtype)) {
             return [null, null, null];
         }
         if (!question_has_capability_on($question, 'view')) {
             return [null, null, null];
         }
 
-        $url = new \moodle_url('/question/bank/questionaudit/audit.php', [
+        $url = new moodle_url('/question/bank/questionaudit/audit.php', [
             'id' => $question->id,
             'returnurl' => $this->qbank->returnurl,
             'sesskey' => sesskey(),
