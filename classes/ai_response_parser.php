@@ -125,4 +125,3 @@ class ai_response_parser {
         ];
     }
 }
-
