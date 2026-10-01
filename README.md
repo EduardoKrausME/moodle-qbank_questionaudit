@@ -1,6 +1,6 @@
 # qbank_questionaudit
 
-`qbank_questionaudit` is a Moodle 4.5+ question bank plugin that audits existing questions. It is intentionally not a
+`qbank_questionaudit` is a Moodle question bank plugin that audits existing questions. It is intentionally not a
 question generator and never changes a question automatically.
 
 The plugin adds three native question-bank entry points:
@@ -9,43 +9,9 @@ The plugin adds three native question-bank entry points:
 - an **Audit selected questions** bulk action;
 - an **Audit this category** control for the current question category.
 
-## Required dependency
-
-This plugin requires `local_ai_bridge`:
-
-https://github.com/EduardoKrausME/moodle-local_ai_bridge/
-
-The dependency declared in `version.php` is:
-
-```php
-$plugin->dependencies = [
-    'local_ai_bridge' => 2026093001,
-];
-```
-
-All AI requests go exclusively through:
-
-```php
-\local_ai_bridge\api::generate(
-    'questionaudit-review',
-    $messages
-);
-```
-
-The plugin contains no API keys, provider selection, endpoint setting or model configuration. Those concerns belong
-to `local_ai_bridge`.
-
-The required bridge purpose is:
-
-`questionaudit-review`
-
-The current bridge user must also be allowed to use `local_ai_bridge` and must belong to an enabled tenant with a valid
-route for that purpose. Bridge, tenant, permission, route and provider failures are shown as an AI-review warning while
-deterministic checks remain available.
-
 ## Supported question types
 
-The first version supports semantic auditing for:
+the plugin supports semantic auditing for:
 
 - Multiple choice (`multichoice`)
 - True/false (`truefalse`)
@@ -123,7 +89,7 @@ apply any suggestion.
 The plugin uses Moodle question capabilities and category contexts. A user cannot audit a question that they cannot
 view. Category audits include only the latest question versions that the current user can view.
 
-The plugin does not send question-attempt data or student answers to AI in this version.
+The plugin does not send question-attempt data or student answers to AI in the plugin.
 
 The plugin does not persist raw prompts, raw AI responses or audit results in its own database tables. It declares a
 null privacy provider because it stores no user data itself. `local_ai_bridge` remains responsible for its own routing,
@@ -131,31 +97,3 @@ usage accounting and privacy behaviour.
 
 Audit actions require a valid Moodle session key because an AI request may consume tenant credits even though the
 question itself is read-only.
-
-## Installation
-
-Copy the plugin directory to:
-
-`question/bank/questionaudit`
-
-Install or update `local_ai_bridge` first, then run the normal Moodle upgrade process.
-
-## Tests
-
-PHPUnit coverage includes:
-
-- supported qtypes;
-- extraction and normalization;
-- deterministic rules;
-- strict AI JSON parsing;
-- invalid AI output;
-- textual evidence validation;
-- question-bank capabilities;
-- questions without content.
-
-The GitHub Actions workflow runs `moodle-plugin-ci`, installs `local_ai_bridge` as an additional plugin dependency, runs
-PHPUnit, Moodle validation and `EduardoKrausME/moodle-plugin-validate`.
-
-## License
-
-GNU GPL v3 or later.
