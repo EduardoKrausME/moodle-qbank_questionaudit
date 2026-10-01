@@ -32,16 +32,21 @@ use templatable;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class report implements renderable, templatable {
+    /** @var array Audit results. */
+    private readonly array $results;
+
+    /** @var moodle_url Question bank return URL. */
+    private readonly moodle_url $returnurl;
+
     /**
      * Constructor.
      *
      * @param array $results Audit results.
      * @param moodle_url $returnurl Question bank return URL.
      */
-    public function __construct(
-        private readonly array $results,
-        private readonly moodle_url $returnurl
-    ) {
+    public function __construct(array $results, moodle_url $returnurl) {
+        $this->results = $results;
+        $this->returnurl = $returnurl;
     }
 
     /**
