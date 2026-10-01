@@ -39,7 +39,7 @@ class report implements renderable, templatable {
      * @param moodle_url $returnurl Question bank return URL.
      */
     public function __construct(
-        private readonly array       $results,
+        private readonly array $results,
         private readonly moodle_url $returnurl
     ) {
     }
