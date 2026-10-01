@@ -54,7 +54,7 @@ final class ai_response_parser_test extends advanced_testcase {
      */
     public function test_invalid_json_response(): void {
         $this->expectException(invalid_parameter_exception::class);
-        (new ai_response_parser())->parse('```json {"summary":"x"} ```', $this->question());
+        (new ai_response_parser())->parse('not-json {"summary":"x"}', $this->question());
     }
 
     /**
