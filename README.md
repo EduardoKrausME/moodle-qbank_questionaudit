@@ -9,7 +9,7 @@ The plugin adds three native question-bank entry points:
 - an **Audit selected questions** bulk action;
 - an **Audit this category** control for the current question category.
 
-## Supported question types
+## Question types analysed
 
 the plugin supports semantic auditing for:
 
