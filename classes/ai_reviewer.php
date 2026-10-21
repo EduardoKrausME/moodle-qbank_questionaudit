@@ -16,7 +16,6 @@
 
 namespace qbank_questionaudit;
 
-use core_text;
 use local_ai_bridge\api;
 use moodle_exception;
 
@@ -142,9 +141,9 @@ PROMPT;
      * @return string
      */
     private function limit(string $value): string {
-        if (core_text::strlen($value) <= 12000) {
+        if (strlen($value) <= 12000) {
             return $value;
         }
-        return core_text::substr($value, 0, 12000) . '…';
+        return substr($value, 0, 12000) . '…';
     }
 }

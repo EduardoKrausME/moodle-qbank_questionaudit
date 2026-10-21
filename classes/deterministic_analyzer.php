@@ -16,7 +16,6 @@
 
 namespace qbank_questionaudit;
 
-use core_text;
 
 /**
  * Fast local checks that do not use AI.
@@ -94,7 +93,7 @@ class deterministic_analyzer {
                     get_string('suggest_empty_answer', 'qbank_questionaudit')
                 );
             } else {
-                $key = core_text::strtolower($text);
+                $key = strtolower($text);
                 if (isset($seen[$key])) {
                     $findings[] = $this->finding(
                         'warning', 'duplicate_answer', 'high', $text,
@@ -277,7 +276,7 @@ class deterministic_analyzer {
         $void = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
         $stack = [];
         foreach ($matches as $match) {
-            $tag = core_text::strtolower($match[1]);
+            $tag = strtolower($match[1]);
             $token = $match[0];
             if (in_array($tag, $void, true) || str_ends_with(trim($token), '/>')) {
                 continue;
@@ -302,10 +301,10 @@ class deterministic_analyzer {
      */
     private function meaningful_name(string $name, string $qtype): bool {
         $name = trim($name);
-        if (core_text::strlen($name) < 4) {
+        if (strlen($name) < 4) {
             return false;
         }
-        $lower = core_text::strtolower($name);
+        $lower = strtolower($name);
         $generic = ['question', 'new question', 'questão', 'nova questão', $qtype];
         return !in_array($lower, $generic, true);
     }
